@@ -1,0 +1,16 @@
+- id: stamp-import-sections
+  name: stamp import-section headers
+  description: >
+    Label the module-level import block with the labeled section headers
+    (Standard library / Third-party / Enthought / Microdrop package /
+    Microdrop style / Microdrop utils / Local / Logger), deriving the
+    grouping from the consumer repo's ruff.toml. Idempotent; run after ruff.
+  entry: stamp-import-sections
+  language: python
+  types: [python]
+
+- id: forbid-scratch-files
+  name: forbid scratch/artifact files
+  entry: scratch/artifact paths must never be committed
+  language: fail
+  files: (^|/)(\.task-report\.md$|\.superpowers/|__pycache__/|\.pixi/)
