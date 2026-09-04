@@ -44,10 +44,27 @@ consumer's repo root (or a parent of the file being stamped) — it walks
 upward from each file to find one, the same way it would from a submodule
 checkout.
 
+## Consumer setup
+
+A complete consumer `.pre-commit-config.yaml` pulls in all three additions:
+
+```yaml
+  - repo: https://github.com/Lucas-C/pre-commit-hooks
+    rev: v1.5.5
+    hooks:
+      - id: insert-license
+        files: \.py$
+        args: [--license-filepath, .copyright-header.txt, --comment-style, "#"]
+  - repo: https://github.com/Blue-Ocean-Technologies-Inc/microdrop-dev-hooks
+    rev: v0.1.0
+    hooks:
+      - id: stamp-import-sections
+      - id: forbid-scratch-files
+```
+
 ## Shared lint baseline
 
-`ruff-base.toml` and `copyright-header.txt` (added once the shared baseline
-lands) are not consumed automatically — pre-commit hooks can't `extend` a
+`ruff-base.toml` and `copyright-header.txt` are not consumed automatically — pre-commit hooks can't `extend` a
 config file across repos the way ruff's own `extend` does within one repo.
 A consumer copies them in and either points its own `ruff.toml` at
 `extend = "ruff-base.toml"` (ruff *does* support that within a single
